@@ -1,0 +1,32 @@
+<!doctype html><meta charset="utf-8" /><title></title>
+<!-- CSS -->
+<style>
+
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+body { background: linear-gradient(120deg, #000 0%, #444 100%); color: #eee; }
+
+.paused {
+	-webkit-animation-play-state: paused;
+	-moz-animation-play-state: paused;
+	animation-play-state: paused;
+}
+</style>
+<!-- JS -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+var
+r = function(min, max) {
+	var ret = (Math.random() * (max - min)) + min;
+	return ((min + max) % 1 === 0) ? Math.ceil(ret) : Math.round(ret * 100) / 100;
+},
+w = $(window).width(),
+h = $(window).height()
+;
+
+$(window).on('click', function(e) {
+	$('body').toggleClass('paused');
+});
+
+</script>

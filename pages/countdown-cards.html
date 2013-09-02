@@ -1,0 +1,142 @@
+<!doctype html><meta charset="utf-8" /><title>Cards</title>
+<!-- CSS -->
+<link href="http://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet">
+<style>
+
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; background: #999; color: #000; overflow: hidden; }
+body { background: linear-gradient(120deg, #001b4b 0%, #11205e 50%, #000327 100%); }
+
+/* Fill viewport */
+html, body, .boxwrap, .box { width: 100%; height: 100%; }
+.boxwrap { cursor: default; -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: -moz-none; -ms-user-select: none; user-select: none; }
+.cardwrap { position: absolute; width: 90px; height: 100px; }
+.card {
+	position: absolute; width: 90px; height: 100px;
+	background: #1b283d; background: #006ed3; color: #eee;
+	background: linear-gradient(120deg, #00328A 0%,#006ed3 100%);
+	/*box-shadow: inset 0 0 1px 1px #000, 0 0 3px #fff, 0 0 19px #008fff, 0 0 12px #fff;*/
+	box-shadow: 0 0 12px #000327;
+	/*box-shadow: 0 0 6px #000327, 90px 90px 40px rgba(0, 0, 0, 0.2);*/
+	font: 900 90px/100px 'Raleway'; text-transform: uppercase; text-align: center;
+}
+.card {
+	-webkit-animation: flip 12s linear infinite;
+	-moz-animation: flip 12s linear infinite;
+	animation: flip 12s linear infinite;
+}
+.box {
+	-webkit-animation: initial-zoom 15s cubic-bezier(0.52, 0.0, 0.58, 1.0) forwards;
+	-moz-animation: initial-zoom 15s cubic-bezier(0.52, 0.0, 0.58, 1.0) forwards;
+	animation: initial-zoom 15s cubic-bezier(0.52, 0.0, 0.58, 1.0) forwards;
+}
+.boxwrap {
+	-webkit-animation: boxwrap 8s ease-in-out infinite alternate;
+	-moz-animation: boxwrap 8s ease-in-out infinite alternate;
+	animation: boxwrap 8s ease-in-out infinite alternate;
+}
+@-webkit-keyframes flip {
+	  0% { -webkit-transform: rotateX(0) rotateY(0) rotateZ(0); }
+	 50% { -webkit-transform: rotateX(360deg) rotateY(0) rotateZ(360deg); }
+	100% { -webkit-transform: rotateX(720deg) rotateY(0) rotateZ(720deg); }
+}
+@-webkit-keyframes initial-zoom {
+	  0% { opacity: 0; -webkit-transform: scale(0); }
+	 10% { opacity: 1; -webkit-transform: scale(1); }
+	100% { opacity: 1; -webkit-transform: scale(1.2); }
+}
+@-webkit-keyframes boxwrap {
+	  0% { -webkit-transform: scale(1, 1); }
+	 100% { -webkit-transform: scale(1.2, 1); }
+}
+@-moz-keyframes flip {
+	  0% { -moz-transform: rotateX(0) rotateY(0) rotateZ(0); }
+	 50% { -moz-transform: rotateX(360deg) rotateY(0) rotateZ(360deg); }
+	100% { -moz-transform: rotateX(720deg) rotateY(0) rotateZ(720deg); }
+}
+@-moz-keyframes initial-zoom {
+	  0% { opacity: 0; -moz-transform: scale(0); }
+	 10% { opacity: 1; -moz-transform: scale(1); }
+	100% { opacity: 1; -moz-transform: scale(1.2); }
+}
+@-moz-keyframes boxwrap {
+	  0% { -moz-transform: scale(1, 1); }
+	 100% { -moz-transform: scale(1.2, 1); }
+}
+@keyframes flip {
+	  0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+	 50% { transform: rotateX(360deg) rotateY(0) rotateZ(360deg); }
+	100% { transform: rotateX(720deg) rotateY(0) rotateZ(720deg); }
+}
+@keyframes initial-zoom {
+	  0% { opacity: 0; transform: scale(0); }
+	 10% { opacity: 1; transform: scale(1); }
+	100% { opacity: 1; transform: scale(1.2); }
+}
+@keyframes boxwrap {
+	  0% { transform: scale(1, 1); }
+	 100% { transform: scale(1.2, 1); }
+}
+.boxwrap, .box, .cardwrap, .card {
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.paused .boxwrap, .paused .box, .paused .cardwrap, .paused .card {
+	-webkit-animation-play-state: paused;
+	-moz-animation-play-state: paused;
+	animation-play-state: paused;
+}
+
+</style>
+<!-- JS -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+var
+r = function(min, max) {
+	var ret = (Math.random() * (max - min)) + min;
+	return ((min + max) % 1 === 0) ? Math.ceil(ret) : Math.round(ret * 100) / 100;
+},
+w = $(window).width(),
+h = $(window).height()
+;
+
+var
+text = 'The quick brown fox jumps over the lazy dog', text = text+text,
+cards = text.replace(/[\sw]/g, '').split('');
+
+document.write('<body><div class="boxwrap"><div class="box">');
+
+$.each(cards, function() {
+	var
+	z = r(100000, w),
+	s = r(0.5, 1.25),
+	$cardwrap = $('<div/>')
+		.addClass('cardwrap')
+		.css({
+			top: r(2, 90) +'%',
+			left: r(2, 90) +'%',
+			transform: 'translateZ('+ (s*z) +'px) scale('+ s +') rotate('+ r(0, 180) +'deg)'
+		})
+	,
+	$card = $('<div/>')
+		.addClass('card')
+		.text(this)
+		.css({
+			animationDelay: r(0.1, 1.3) +'s',
+			animationDuration: r(10, 20) +'s'
+		})
+	;
+	$('.box').append($cardwrap.html($card));
+});
+
+$(window).on('mousemove', function(e) {
+	var relP = Math.round(e.pageX / ($(window).width() / 100)) || 1;
+});
+
+$(window).on('click', function(e) {
+	$('body').toggleClass('paused');
+});
+
+</script>
