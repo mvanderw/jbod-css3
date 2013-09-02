@@ -131,10 +131,6 @@ $.each(cards, function() {
 	$('.box').append($cardwrap.html($card));
 });
 
-$(window).on('mousemove', function(e) {
-	var relP = Math.round(e.pageX / ($(window).width() / 100)) || 1;
-});
-
 $(window).on('click', function(e) {
 	$('body').toggleClass('paused');
 });
